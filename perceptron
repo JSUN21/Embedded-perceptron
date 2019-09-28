@@ -1,0 +1,256 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+#define max 10
+
+
+using namespace std;
+
+class Neurona
+{
+private:
+	float umbral;
+	float peso_1;
+	float peso_2;
+public:
+	void setUmbral(float umbral)
+	{
+		this->umbral = umbral;
+	}
+	void setPeso_1(float peso_1)
+	{
+		this->peso_1 = peso_1;
+	}
+	void setPeso_2(float peso_2)
+	{
+		this->peso_2 = peso_2;
+	}
+	float getUmbral()
+	{
+		return umbral;
+	}
+	float getPeso_1()
+	{
+		return peso_1;
+	}
+	float getPeso_2()
+	{
+		return peso_2;
+	}
+	int sigmoide(float valor)
+	{
+		if (valor > 0)
+			return 1;
+		else
+			return 0;
+	}
+	float neurona(float entrada_1, float entrada_2)
+	{
+		return (umbral + (entrada_1 * peso_1) + (entrada_2 * peso_2));
+	}
+	float salida(float entrada_1, float entrada_2)
+	{
+		return sigmoide(neurona(entrada_1, entrada_2));
+	}
+};
+
+int main()
+{
+
+	srand(time(NULL));
+	Neurona neurona;
+	int aprendizaje,ejecucion;
+	int entrada, salida;
+	int led_aprednizaje, led_ejecucion;
+	int i, j;
+
+	float peso_1_anterior = 0;
+	float peso_2_anterior = 0;
+	float umbral_anterior = 0;
+	int LUT[max][max][max], i, j, n, u;
+
+	int condicion = 1;
+	while (condicion)
+
+	{
+
+		{
+
+			condicion = 0;
+			if (peso_1_anterior == 0 && peso_2_anterior == 0)
+			{
+				neurona.setPeso_1(rand() % (10) / 10.0);
+				neurona.setPeso_2(rand() % (10) / 10.0);
+				neurona.setUmbral(rand() % (10) / 10.0);
+				peso_1_anterior = neurona.getPeso_1();
+				peso_2_anterior = neurona.getPeso_2();
+				umbral_anterior = neurona.getUmbral();
+			}
+
+			int matriz[100][100], entradas, valores, in;
+
+			cout << "Digita el numero de entradas: ";
+			cin >> entradas;
+			cout << "Digita el numero de valores: ";
+			cin >> valores;
+
+			i = 0;
+			j = 0;
+
+			if (aprendizaje = '1') {
+
+				led_aprednizaje = '1';
+
+				while (ejecucion != 1) {
+                       
+					if (entrada = '1') {
+
+						scanf_s("%d", &LUT[i][j]);
+
+						i++;
+						j++;
+					}
+
+					if (salida = '1') {
+
+						scanf_s("%d", &LUT[n]);
+					}
+
+
+				}
+			}
+
+			//Almacenando elementos en la matriz de entradas
+			for (int i = 0; i < entradas; i++)
+			{
+				for (int j = 0; j < valores; j++)
+				{
+					cout << "Digite el numero de la posicion [" << i << "][" << j << "] :";
+					cin >> matriz[i][j];
+					in = matriz[i][j];
+				}
+			}
+
+			//Mostrando la matriz
+			for (int i = 0; i < valores; i++)
+			{
+				for (int j = 0; j < entradas; j++)
+
+				{
+					cout << "[" << matriz[i][j] << "]";
+				}
+				cout << "\n";
+			}
+
+			//Almacenando elementos en matriz de salida
+			int matriz_salida[100][100], y, valor, out;
+
+			cout << "Digita el numero de salidas: ";
+			cin >> y;
+			cout << "Digita el valor: ";
+			cin >> valor;
+
+			//Almacenando elementos en la matriz de salidas
+			for (int k = 0; k < y; k++)
+			{
+				for (int n = 0; n < valor; n++)
+				{
+					cout << "Digite el numero de la posicion [" << k << "][" << n << "] :";
+					cin >> matriz_salida[k][n];
+
+
+				}
+			}
+
+			//Mostrando la matriz salidas
+			for (int k = 0; k < valor; k++)
+			{
+				for (int n = 0; n < y; n++)
+				{
+					cout << "[" << matriz_salida[k][n] << "]";
+				}
+				cout << "\n";
+			}
+
+
+
+			cout << "peso 1: " << neurona.getPeso_1() << endl;
+			cout << "peso 2: " << neurona.getPeso_2() << endl;
+			cout << "umbral: " << neurona.getUmbral() << endl;
+
+			cout << "*peso 1: " << peso_1_anterior << endl;
+			cout << "*peso 2: " << peso_2_anterior << endl;
+			cout << "*umbral: " << umbral_anterior << endl;
+
+			cout << "A B | X" << endl;
+			for (int i = 0; i < valores; i++)
+			{
+				for (int j = 0; j < entradas; j++)
+
+				{
+					cout << "[" << matriz[i][j] << "]";
+				}
+				cout << "\n";
+			}
+
+			/*cout << "A:"<<i>>" B:"<<j<<" : " << neurona.salida(i,j) << endl;
+			cout << "A:1 B:0 : " << neurona.salida(1, 0) << endl;
+			cout << "A:0 B:1 : " << neurona.salida(0, 1) << endl;
+			cout << "A:0 B:0 : " << neurona.salida(0, 0) << endl;*/
+
+			peso_1_anterior = neurona.getPeso_1();
+			peso_2_anterior = neurona.getPeso_2();
+			umbral_anterior = neurona.getUmbral();
+
+			for (int i = 0; i < valores; i++)
+			{
+				for (int j = 0; j < entradas; j++)
+				{
+					for (int k = 0; k < valor; k++)
+					{
+						for (int n = 0; n < y; n++)
+						{
+
+							cout << "A:" << i << " B:" << j << " : " << neurona.salida(i, j) << endl;
+
+							if (neurona.salida(i, j) != (k, n))
+							{
+								neurona.setPeso_1(peso_1_anterior + 0.2f * ((k, n) - neurona.salida(i, j)) * i);
+								neurona.setPeso_2(peso_2_anterior + 0.2f * ((k, n) - neurona.salida(i, j)) * j);
+								neurona.setUmbral(umbral_anterior + 0.2f * ((k, n) - neurona.salida(i, j)));
+								condicion = 1;
+							}
+							/*if(neurona.salida(1,0) != 0)
+							{
+
+								neurona.setPeso_1(peso_1_anterior + 0.2f * (0 - neurona.salida(1,0)) * 1);
+								neurona.setPeso_2(peso_2_anterior + 0.2f * (0 - neurona.salida(1,0)) * 0);
+								neurona.setUmbral(umbral_anterior + 0.2f * (0 - neurona.salida(1,0)));
+								condicion = 1;
+							}
+							if(neurona.salida(0,1) != 0)
+							{
+
+								neurona.setPeso_1(peso_1_anterior + 0.2f * (0 - neurona.salida(0,1)) * 0);
+								neurona.setPeso_2(peso_2_anterior + 0.2f * (0 - neurona.salida(0,1)) * 1);
+								neurona.setUmbral(umbral_anterior + 0.2f * (0 - neurona.salida(0,1)));
+								condicion = 1;
+							}
+							if(neurona.salida(0,0) != 0)
+							{
+
+								neurona.setPeso_1(peso_1_anterior + 0.2f * (0 - neurona.salida(0,0)) * 0);
+								neurona.setPeso_2(peso_2_anterior + 0.2f * (0 - neurona.salida(0,0)) * 0);
+								neurona.setUmbral(umbral_anterior + 0.2f * (0 - neurona.salida(0,0)));
+								condicion = 1;
+							}*/
+							cout << endl;
+						}
+
+					}
+				}
+			}
+		}
+	}
+	return 0;
+}
