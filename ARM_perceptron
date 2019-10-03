@@ -8,7 +8,8 @@
 using namespace std;
 float G[MAX][MAX];
 int i, j, n, u;
-float output[MAX];
+float output [MAX] ;
+float entrada_1[MAX], entrada_2[MAX];
 
 class Neurona
 {
@@ -49,15 +50,18 @@ public:
 		else
 			return 0;
 	}
-	float neurona(float entrada_1, float entrada_2)
+	float neurona(float entrada_1[MAX], float entrada_2[MAX])
 	{
-		return (bios + (entrada_1 * peso_1) + (entrada_2 * peso_2));
+		return (bios + (entrada_1[MAX] * peso_1) + (entrada_2[MAX] * peso_2));
 	}
-	float salida(float entrada_1, float entrada_2)
+	float salida(  float entrada_1[MAX],  float  entrada_2[MAX])
 	{
 		return sigmoide(neurona(entrada_1, entrada_2));
 	}
 };
+
+
+
 
 int main()
 {
@@ -68,9 +72,7 @@ int main()
 	float peso_1_anterior = 0;
 	float peso_2_anterior = 0;
 	float bios_anterior = 0;
-	//float G[MAX][MAX];
-	//int i, j, n, u;
-	//float output[MAX];
+	
 
 	int condicion = 1;
 	while (condicion)
@@ -157,8 +159,11 @@ int main()
 		cout << "0 0 | " << (0) << endl;
 		*/
 
+		
+
 		for (i = 0; i < u; i++) {
 			for (j = 0; j < n; j++) {
+		
 
 
 				cout << "A:"<<G[i] <<"B:"<<G[j] << neurona.salida(G[i],G[j]) << endl;
@@ -172,10 +177,6 @@ int main()
 				peso_2_anterior = neurona.getPeso_2();
 				bios_anterior = neurona.getbios();
 
-
-
-
-				
 
 
 				if (neurona.salida(G[i],G[j]) != output[i])
@@ -219,3 +220,7 @@ int main()
 	return 0;
 
 }
+
+
+Gravedad	Código	Descripción	Proyecto	Archivo	Línea	Estado suprimido
+Error	C2664	 'int Neurona::sigmoide(float [])': el argumento 1 no puede convertirse de 'float' a 'float []'	ARM_Perceptron	C:\Users\user\Documents\Programacion\ARM_Perceptron\ARM_Perceptron.cpp	59	
