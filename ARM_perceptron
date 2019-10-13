@@ -3,7 +3,10 @@
 #include <ctime>
 
 int a0, a1, a2, a3, b0, b1, b2, b3, c0, c1, c2, c3;
-
+int new_c0, new_c1, new_c2, new_c3;
+int input1 = 0;
+int input2=0;
+int execute = 0;
 using namespace std;
 
 class Neurona
@@ -56,131 +59,205 @@ public:
 };
 
 int main()
-{
+{ 
+	while (1) { //INFINITE WHILE
+
+		//if (learning = 1) {
 
 
-	printf("Insterte matriz  A  B | X     COMPUERTA DE 4 \n");
-
-			scanf_s("%d", &a0);
-                              scanf_s("%d", &b0);
-                                                scanf_s("%d", &c0);
-
-			scanf_s("%d", &a1);
-                              scanf_s("%d", &b1);
-                                                 scanf_s("%d", &c1);
-
-			scanf_s("%d", &a2);
-                              scanf_s("%d", &b2);
-                                                 scanf_s("%d", &c2);
-
-			scanf_s("%d", &a3);
-			                  scanf_s("%d", &b3);
-                                                scanf_s("%d", &c3);
-
-												printf("\n");
-
-												printf("Matriz insertada\n %d %d %d \n %d %d %d\n %d %d %d\n %d %d %d " , a0,b0,c0,a1,b1,c1,a2,b2,c2,a3,b3,c3);
-
-												printf("\n");
-												printf("\n");
-			
-			
-			
-
-	srand(time(NULL));
-	Neurona neurona;
-
-	float peso_1_anterior = 0;
-	float peso_2_anterior = 0;
-	float bios_anterior = 0;
 
 
-	int condicion = 1;
-	while (condicion)
-	{
 
-		condicion = 0;
-		if (peso_1_anterior == 0 && peso_2_anterior == 0)
+		printf("ENTER LUT   A  B | X     2-IN 1-OUT GATE (AND,OR,XOR,ETC;) \n");
+
+		scanf_s("%d", &a0);
+		scanf_s("%d", &b0);
+		scanf_s("%d", &c0);
+
+		scanf_s("%d", &a1);
+		scanf_s("%d", &b1);
+		scanf_s("%d", &c1);
+
+		scanf_s("%d", &a2);
+		scanf_s("%d", &b2);
+		scanf_s("%d", &c2);
+
+		scanf_s("%d", &a3);
+		scanf_s("%d", &b3);
+		scanf_s("%d", &c3);
+
+		printf("\n");
+
+		printf("LUT Introduced \n %d %d %d \n %d %d %d\n %d %d %d\n %d %d %d ", a0, b0, c0, a1, b1, c1, a2, b2, c2, a3, b3, c3);
+
+		printf("\n");
+		printf("\n");
+
+
+
+
+		srand(time(NULL));
+		Neurona neurona;
+
+		float peso_1_anterior = 0;
+		float peso_2_anterior = 0;
+		float bios_anterior = 0;
+
+
+		int condicion = 1;
+		while (condicion)
 		{
-			neurona.setPeso_1(rand() % (10) / 10.0);
-			neurona.setPeso_2(rand() % (10) / 10.0);
-			neurona.setbios(rand() % (10) / 10.0);
+
+			condicion = 0;
+			if (peso_1_anterior == 0 && peso_2_anterior == 0)
+			{
+				neurona.setPeso_1(rand() % (10) / 10.0);
+				neurona.setPeso_2(rand() % (10) / 10.0);
+				neurona.setbios(rand() % (10) / 10.0);
+				peso_1_anterior = neurona.getPeso_1();
+				peso_2_anterior = neurona.getPeso_2();
+				bios_anterior = neurona.getbios();
+			}
+
+			cout << "peso 1: " << neurona.getPeso_1() << endl;
+			cout << "peso 2: " << neurona.getPeso_2() << endl;
+			cout << "bios: " << neurona.getbios() << endl;
+
+			cout << "*peso 1: " << peso_1_anterior << endl;
+			cout << "*peso 2: " << peso_2_anterior << endl;
+			cout << "*bios: " << bios_anterior << endl;
+
+
+			cout << "Learning in Process" << endl;
+			cout << "A:0 B:0 : " << neurona.salida(a0, b0) << endl;
+			cout << "A:0 B:1 : " << neurona.salida(a1, b1) << endl;
+			cout << "A:1 B:0 : " << neurona.salida(a2, b2) << endl;
+			cout << "A:1 B:1 : " << neurona.salida(a3, b3) << endl;
+
+			
+		/*
+		
+			printf("\n");
+
+	   printf("A:%d  B:%d  C:%d ", a0,  b0, neurona.salida(a0, b0));
+	   printf("\n");
+	   printf("A:%d  B:%d  C:%d", a1,  b1, neurona.salida(a1, b1));
+	   printf("\n");
+       printf("A:%d  B:%d  C:%d", a2,  b2,neurona.salida(a2, b2) );
+	   printf("\n");
+	   printf("A:%d  B:%d  C:%d", a3, b3,neurona.salida(a3, b3) );
+								
+	   printf("\n");*/
+
+			new_c0 = neurona.salida(a0, b0);
+			new_c1 = neurona.salida(a1, b1);
+			new_c2 = neurona.salida(a2, b2);
+			new_c3 = neurona.salida(a3, b3);
+
+
+
 			peso_1_anterior = neurona.getPeso_1();
 			peso_2_anterior = neurona.getPeso_2();
 			bios_anterior = neurona.getbios();
-		}
 
-		cout << "peso 1: " << neurona.getPeso_1() << endl;
-		cout << "peso 2: " << neurona.getPeso_2() << endl;
-		cout << "bios: " << neurona.getbios() << endl;
+			if (neurona.salida(a3, b3) != c3)
+			{
+				neurona.setPeso_1(peso_1_anterior + 0.2f * (a3 - neurona.salida(a3, b3)) * b3);     // 1  1
+				neurona.setPeso_2(peso_2_anterior + 0.2f * (a3 - neurona.salida(a3, b3)) * b3);
+				neurona.setbios(bios_anterior + 0.2f * (a3 - neurona.salida(a3, b3)));
+				condicion = 1;
+			}
+			if (neurona.salida(a2, b2) != c2)
+			{
 
-		cout << "*peso 1: " << peso_1_anterior << endl;
-		cout << "*peso 2: " << peso_2_anterior << endl;
-		cout << "*bios: " << bios_anterior << endl;
+				neurona.setPeso_1(peso_1_anterior + 0.2f * (a1 - neurona.salida(a2, b2)) * b1);   // 0 1
+				neurona.setPeso_2(peso_2_anterior + 0.2f * (a0 - neurona.salida(a2, b2)) * a0);  // 0 0
+				neurona.setbios(bios_anterior + 0.2f * (a0 - neurona.salida(a2, b2)));   // 0
+				condicion = 1;
+			}
+			if (neurona.salida(a1, b1) != c1)
+			{
 
-		/*
-		cout << "A B | X" << endl;
-		cout << "1 1 | " << (1) << endl;
-		cout << "1 0 | " << (0) << endl;
-		cout << "0 1 | " << (0) << endl;
-		cout << "0 0 | " << (0) << endl;*/
+				neurona.setPeso_1(peso_1_anterior + 0.2f * (a0 - neurona.salida(a1, b1)) * b0); //0 0
+				neurona.setPeso_2(peso_2_anterior + 0.2f * (a1 - neurona.salida(a1, b1)) * b1); // 0 1
+				neurona.setbios(bios_anterior + 0.2f * (a0 - neurona.salida(a1, b1)));          //0
+				condicion = 1;
+			}
+			if (neurona.salida(a0, b0) != c0)
+			{
 
-		/*
-		cout << "A: B:  | X",
-		cout << "\n %d %d"a0, b0, neurona.salida(a0, b0);
-		cout << a1, b2,
+				neurona.setPeso_1(peso_1_anterior + 0.2f * (a0 - neurona.salida(a0, b0)) * b0);   // 0 0
+				neurona.setPeso_2(peso_2_anterior + 0.2f * (a0 - neurona.salida(a0, b0)) * b0);   //0 0
+				neurona.setbios(bios_anterior + 0.2f * (a0 - neurona.salida(a0, b0)));           //0
+				condicion = 1;
+			}
 
-		                                 printf("A: %d B: %d %d", a0,  b0, neurona.salida(a0, b0));
-										 printf("\n");
-										 printf("A: %d B: %d %d", a1,  b1, neurona.salida(a1, b1));
-										 printf("\n");
-										 printf ("A: %d B: %d %d", a2,  b2,neurona.salida(a2, b2) );
-										 printf("\n");
-										 printf ("A: %d B: %d %d", a3, b3,neurona.salida(a3, b3) );*/
+			
+	
+			}
 
 
-		cout << "A:0 B:0 : " << neurona.salida(a0, b0) << endl;
-		cout << "A:0 B:1 : " << neurona.salida(a1, b1) << endl;
-		cout << "A:1 B:0 : " << neurona.salida(a2, b2) << endl;
-		cout << "A:1 B:1 : " << neurona.salida(a3, b3) << endl;
 
-		peso_1_anterior = neurona.getPeso_1();
-		peso_2_anterior = neurona.getPeso_2();
-		bios_anterior = neurona.getbios();
-
-		if (neurona.salida(a3, b3) != c3)
-		{
-			neurona.setPeso_1(peso_1_anterior + 0.2f * (a3 - neurona.salida(a3, b3)) * b3);     // 1  1
-			neurona.setPeso_2(peso_2_anterior + 0.2f * (a3 - neurona.salida(a3, b3)) * b3);
-			neurona.setbios(bios_anterior + 0.2f * (a3 - neurona.salida(a3, b3)));
-			condicion = 1;
-		}
-		if (neurona.salida(a2, b2) != c2)
+		if (((neurona.salida(a3, b3)) == c3) && ((neurona.salida(a2, b2)) == c2) && ((neurona.salida(a1, b1)) == c1) && ((neurona.salida(a0, b0)) == c0))
 		{
 
-			neurona.setPeso_1(peso_1_anterior + 0.2f * (a1 - neurona.salida(a2, b2)) * b1);   // 0 1
-			neurona.setPeso_2(peso_2_anterior + 0.2f * (a0 - neurona.salida(a2, b2)) * a0);  // 0 0
-			neurona.setbios(bios_anterior + 0.2f * (a0 - neurona.salida(a2, b2)));   // 0
-			condicion = 1;
-		}
-		if (neurona.salida(a1, b1) != c1)
-		{
+			printf("INICIATE EXECUTION?\n");
+			scanf_s("%d", &execute);
 
-			neurona.setPeso_1(peso_1_anterior + 0.2f * (a0 - neurona.salida(a1, b1)) * b0); //0 0
-			neurona.setPeso_2(peso_2_anterior + 0.2f * (a1 - neurona.salida(a1, b1)) * b1); // 0 1
-			neurona.setbios(bios_anterior + 0.2f * (a0 - neurona.salida(a1, b1)));          //0
-			condicion = 1;
-		}
-		if (neurona.salida(a0, b0) != c0)
-		{
+			
+			if (execute == 1) {
 
-			neurona.setPeso_1(peso_1_anterior + 0.2f * (a0 - neurona.salida(a0, b0)) * b0);   // 0 0
-			neurona.setPeso_2(peso_2_anterior + 0.2f * (a0 - neurona.salida(a0, b0)) * b0);   //0 0
-			neurona.setbios(bios_anterior + 0.2f * (a0 - neurona.salida(a0, b0)));           //0
-			condicion = 1;
-		}
-		cout << endl;
-	}
-	return 0;
+				while (execute == 1) {
+					printf("\n");
+					printf("input Data  ");
+					scanf_s("%d", &input1);
+					scanf_s("%d", &input2);
+					printf("\n");
 
-}
+					if (input1 == a0 && input2 == b0) {
+
+						printf("A:%d B:%d  :%d \n", a0, b0, new_c0);
+
+
+					}
+
+					if (input1 == a1 && input2 == b1) {
+
+						printf("A:%d B:%d  :%d \n", a1, b1, new_c1);
+					}
+
+
+					if (input1 == a2 && input2 == b2) {
+
+						printf("A:%d B:%d  :%d \n", a2, b2, new_c2);
+					}
+
+
+					if (input1 == a3 && input2 == b3) {
+
+						printf("A:%d B:%d  :%d \n", a3, b3, new_c3);
+					}
+
+
+
+                         printf("INICIATE EXECUTION?\n  ");
+				         scanf_s("%d", &execute);
+
+
+
+				}
+				//cout << endl;
+
+				
+			}
+
+
+		}//while CONDICION
+
+	}// while learning
+                              //cout << endl;
+	} //END INFINITE WHILE
+
+//} // END MAIN PROGRAM
+
+
